@@ -28,21 +28,15 @@ public class AuthController {
 
     @PostMapping(LOGIN)
     public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequest) {
-        logger.info("Intentando login para email: {}", loginRequest.getEmail());
         UserEntity user = userRepository.findByEmail(loginRequest.getEmail());
         if (user == null) {
-            logger.warn("Usuario no encontrado para email: {}", loginRequest.getEmail());
             return ResponseEntity.status(401).body("Credenciales inválidas");
         }
-        logger.info("Usuario encontrado: {}", user.getEmail());
         boolean passwordMatches = passwordEncoder.matches(loginRequest.getPassword(), user.getPassword());
-        logger.info("¿Contraseña coincide?: {}", passwordMatches);
         if (!passwordMatches) {
-            logger.warn("Contraseña incorrecta para email: {}", loginRequest.getEmail());
             return ResponseEntity.status(401).body("Credenciales inválidas");
         }
         String token = jwtUtil.generateToken(user.getEmail());
-        logger.info("Login exitoso para email: {}", loginRequest.getEmail());
         return ResponseEntity.ok().body(java.util.Map.of("access_token", token));
     }
 } 
