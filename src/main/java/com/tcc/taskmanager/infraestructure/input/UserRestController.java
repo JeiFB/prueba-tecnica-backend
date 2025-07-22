@@ -8,10 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import static com.tcc.taskmanager.infraestructure.input.ApiRoutes.User.*;
+
 
 @RestController
-@RequestMapping(BASE_URL)
+@RequestMapping("/user")
 public class UserRestController {
     private final IUserHandler userHandler;
 
@@ -19,7 +19,7 @@ public class UserRestController {
         this.userHandler = userHandler;
     }
 
-    @GetMapping(GET_BY_ID)
+    @GetMapping("/{id}")
     public ResponseEntity<UserResponseDto> getUserById(@PathVariable(value = "id")Long id){
         return  ResponseEntity.ok(userHandler.getUserById(id));
     }

@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import static com.tcc.taskmanager.infraestructure.input.ApiRoutes.Task.*;
+
 
 @RestController
-@RequestMapping(BASE_URL)
+@RequestMapping("/task")
 @RequiredArgsConstructor
 public class TaskRestController {
     private final ITaskHandler taskHandler;
@@ -24,7 +24,7 @@ public class TaskRestController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(GET_BY_ID)
+    @GetMapping("/{id}")
     public ResponseEntity<TaskResponseDto> getTaskById(@PathVariable Long id) {
         return ResponseEntity.ok(taskHandler.getTaskById(id));
     }
@@ -34,25 +34,25 @@ public class TaskRestController {
         return ResponseEntity.ok(taskHandler.getAllTasks());
     }
 
-    @PostMapping(FILTER)
+    @PostMapping("/filter")
     public ResponseEntity<List<TaskResponseDto>> filterTasks(@RequestBody TaskFilterRequestDto filters) {
         return ResponseEntity.ok(taskHandler.findTasksByFilters(filters));
     }
 
-    @GetMapping(SEARCH)
+    @GetMapping("/search")
     public ResponseEntity<Page<TaskResponseDto>> searchByTitle(
             @RequestParam String title,
             Pageable pageable) {
         return ResponseEntity.ok(taskHandler.searchByTitle(title, pageable));
     }
 
-    @PutMapping(GET_BY_ID)
+    @PutMapping("/{id}")
     public ResponseEntity<Void> updateTask(@PathVariable Long id, @RequestBody TaskRequestDto dto) {
         taskHandler.updateTask(id, dto);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping(GET_BY_ID)
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         taskHandler.deleteTask(id);
         return ResponseEntity.ok().build();

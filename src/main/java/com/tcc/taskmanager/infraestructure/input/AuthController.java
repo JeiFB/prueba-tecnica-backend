@@ -11,10 +11,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import static com.tcc.taskmanager.infraestructure.input.ApiRoutes.Auth.*;
+
 
 @RestController
-@RequestMapping(BASE_URL)
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
@@ -26,7 +26,7 @@ public class AuthController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @PostMapping(LOGIN)
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequest) {
         UserEntity user = userRepository.findByEmail(loginRequest.getEmail());
         if (user == null) {
