@@ -11,11 +11,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+@Tag(name = "Autenticación", description = "Endpoints para el inicio de sesión y gestión de tokens")
 public class AuthController {
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
@@ -27,6 +30,7 @@ public class AuthController {
     private BCryptPasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
+    @Operation(summary = "Iniciar sesión", description = "Autentica a un usuario y devuelve un token JWT si las credenciales son válidas.")
     public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequest) {
         UserEntity user = userRepository.findByEmail(loginRequest.getEmail());
         if (user == null) {
