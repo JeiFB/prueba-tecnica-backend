@@ -12,7 +12,7 @@ import java.util.Map;
 @RequestMapping("/health")
 public class HealthCheckController {
 
-    @GetMapping("")
+    @GetMapping("/")
     public ResponseEntity<Map<String, String>> healthCheck() {
         return ResponseEntity.ok(Collections.singletonMap("status", "UP"));
     }
