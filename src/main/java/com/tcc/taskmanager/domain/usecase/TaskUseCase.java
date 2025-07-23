@@ -9,8 +9,10 @@ import com.tcc.taskmanager.domain.models.TaskStatus;
 import com.tcc.taskmanager.domain.spi.persistence.ITaskPersistencePort;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import com.tcc.taskmanager.domain.exceptions.ResourceNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class TaskUseCase implements ITaskServicePort {
     private final ITaskPersistencePort taskPersistencePort;
@@ -26,7 +28,8 @@ public class TaskUseCase implements ITaskServicePort {
 
     @Override
     public Task getTaskById(Long id) {
-        return taskPersistencePort.getTaskById(id);
+        return Optional.ofNullable(taskPersistencePort.getTaskById(id))
+                .orElseThrow(() -> new ResourceNotFoundException("Tarea no encontrada con el ID: " + id));
     }
 
     @Override
@@ -36,11 +39,13 @@ public class TaskUseCase implements ITaskServicePort {
 
     @Override
     public void updateTask(Task task) {
+        getTaskById(task.getId()); // Verifica si la tarea existe, si no, lanza excepción
         taskPersistencePort.updateTask(task);
     }
 
     @Override
     public void deleteTask(Long id) {
+        getTaskById(id); // Verifica si la tarea existe, si no, lanza excepción
         taskPersistencePort.deleteTask(id);
     }
 

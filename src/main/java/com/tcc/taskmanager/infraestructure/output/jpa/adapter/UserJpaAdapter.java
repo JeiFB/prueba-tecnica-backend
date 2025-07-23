@@ -31,8 +31,11 @@ public class UserJpaAdapter implements IUserPersistencePort {
 
     @Override
     public List<User> getAllUsers() {
-        return userRepository.findAll().stream()
-                .map(iUserEntityMapper::toDomain)
-                .collect(Collectors.toList());
+        return userEntityMapper.toUserList(userRepository.findAll());
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 }

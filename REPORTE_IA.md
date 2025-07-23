@@ -1,13 +1,4 @@
-# Reporte de Uso de Inteligencia Artificial
-
-Este documento detalla el uso de asistentes de IA durante el desarrollo del proyecto "Gestor de Tareas", conforme a los requerimientos de la prueba técnica.
-
-### 1. Herramientas Utilizadas
-
-- **Asistente Principal:** **Gemini Pro en Google AI Studio (o similar)**, integrado en el entorno de desarrollo.
-- **Función:** Asistente de pair programming para la generación de código, depuración, refactorización y creación de documentación.
-
-### 2. Optimizaciones y Tareas Clave Realizadas con IA
+### 1. Optimizaciones y Tareas Clave Realizadas con IA
 
 El asistente de IA fue fundamental en las siguientes áreas:
 
@@ -26,7 +17,7 @@ El asistente de IA fue fundamental en las siguientes áreas:
     - **Anotaciones de API:** Añadió las anotaciones `@Tag`, `@Operation` y `@SecurityRequirement` a todos los controladores, ahorrando un tiempo considerable de trabajo manual.
     - **Generación de Documentación:** Creó borradores completos para el `README.md`, el diagrama de arquitectura en Mermaid y el documento de decisiones técnicas.
 
-### 3. Ejemplos Específicos de Código Generado
+### 2. Ejemplos Específicos de Código Generado
 
 A continuación se presentan dos ejemplos de código más complejos donde el asistente de IA fue crucial para implementar soluciones robustas y siguiendo las mejores prácticas de la industria.
 
@@ -94,14 +85,5 @@ A continuación se presentan dos ejemplos de código más complejos donde el asi
   ```
   *Esta solución integrada demuestra la capacidad de la IA para manejar una funcionalidad compleja que abarca configuración, seguridad y documentación.*
 
-### 4. Tiempo Ahorrado Estimado
-
-El uso de un asistente de IA permitió un desarrollo mucho más fluido, especialmente en la resolución de problemas y la generación de código repetitivo.
-
-- **Fase de Configuración y Despliegue:** **~3-4 horas.** La depuración de Docker y los problemas de despliegue en Render se resolvieron en minutos en lugar de horas de investigación en foros y documentación.
-- **Fase de Documentación (API y proyecto):** **~2-3 horas.** La generación automática de anotaciones de Swagger y la creación de los archivos `README.md`, `DECISIONES.md` y este mismo reporte fue casi instantánea.
-- **Fase de Debugging:** **~1-2 horas.** Errores como el del CORS y la clave JWT fueron identificados y solucionados con una rapidez significativamente mayor.
-
+### 3. Tiempo Ahorrado Estimado
 **Total estimado de tiempo ahorrado: 6-9 horas.**
-
-El principal beneficio no fue solo la velocidad, sino la capacidad de aplicar las mejores prácticas de la industria (como Dockerfiles multi-etapa o la configuración correcta de JWT) de manera inmediata y sin una curva de aprendizaje extensa. 
