@@ -13,6 +13,7 @@ import com.tcc.taskmanager.domain.exceptions.ResourceNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import static com.tcc.taskmanager.domain.constants.DomainConstants.TASK_NOT_FOUND_MESSAGE;
 
 public class TaskUseCase implements ITaskServicePort {
     private final ITaskPersistencePort taskPersistencePort;
@@ -29,7 +30,7 @@ public class TaskUseCase implements ITaskServicePort {
     @Override
     public Task getTaskById(Long id) {
         return Optional.ofNullable(taskPersistencePort.getTaskById(id))
-                .orElseThrow(() -> new ResourceNotFoundException("Tarea no encontrada con el ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException(TASK_NOT_FOUND_MESSAGE + id));
     }
 
     @Override
@@ -39,13 +40,13 @@ public class TaskUseCase implements ITaskServicePort {
 
     @Override
     public void updateTask(Task task) {
-        getTaskById(task.getId()); // Verifica si la tarea existe, si no, lanza excepción
+        getTaskById(task.getId());
         taskPersistencePort.updateTask(task);
     }
 
     @Override
     public void deleteTask(Long id) {
-        getTaskById(id); // Verifica si la tarea existe, si no, lanza excepción
+        getTaskById(id);
         taskPersistencePort.deleteTask(id);
     }
 

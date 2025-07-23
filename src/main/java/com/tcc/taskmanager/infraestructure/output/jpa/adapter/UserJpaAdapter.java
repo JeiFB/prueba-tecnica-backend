@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import lombok.extern.log4j.Log4j2;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Log4j2
@@ -16,22 +17,25 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserJpaAdapter implements IUserPersistencePort {
     private final IUserRepository userRepository;
-    private final IUserEntityMapper iUserEntityMapper;
+    private final IUserEntityMapper userEntityMapper;
     private final BCryptPasswordEncoder passwordEncoder;
     @Override
     public void createUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(iUserEntityMapper.toEntity(user));
+        userRepository.save(userEntityMapper.toEntity(user));
     }
 
     @Override
     public User getUserById(Long userId) {
-        return iUserEntityMapper.toDomain(userRepository.getReferenceById(userId));
+        return userRepository.findById(userId).map(userEntityMapper::toDomain).orElse(null);
     }
 
     @Override
     public List<User> getAllUsers() {
-        return userEntityMapper.toUserList(userRepository.findAll());
+        return userRepository.findAll()
+                .stream()
+                .map(userEntityMapper::toDomain)
+                .collect(Collectors.toList());
     }
 
     @Override

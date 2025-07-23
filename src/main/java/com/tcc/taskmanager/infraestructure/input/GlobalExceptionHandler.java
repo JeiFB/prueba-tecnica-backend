@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Collections;
 import java.util.Map;
+import static com.tcc.taskmanager.infraestructure.constants.InfrastructureConstants.*;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -17,22 +18,20 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleResourceNotFoundException(ResourceNotFoundException ex) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
-                .body(Collections.singletonMap("error", ex.getMessage()));
+                .body(Collections.singletonMap(GENERIC_ERROR_MESSAGE_KEY, ex.getMessage()));
     }
 
     @ExceptionHandler(EmailAlreadyExistsException.class)
     public ResponseEntity<Map<String, String>> handleEmailAlreadyExistsException(EmailAlreadyExistsException ex) {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
-                .body(Collections.singletonMap("error", ex.getMessage()));
+                .body(Collections.singletonMap(GENERIC_ERROR_MESSAGE_KEY, ex.getMessage()));
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleGenericException(Exception ex) {
-        // Log a nivel de servidor
-        // log.error("Error inesperado", ex);
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Collections.singletonMap("error", "Ha ocurrido un error inesperado en el servidor."));
+                .body(Collections.singletonMap(GENERIC_ERROR_MESSAGE_KEY, GENERIC_ERROR_MESSAGE_VALUE));
     }
 } 

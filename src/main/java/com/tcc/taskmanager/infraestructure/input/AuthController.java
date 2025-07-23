@@ -13,12 +13,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import static com.tcc.taskmanager.infraestructure.constants.InfrastructureConstants.*;
 
 
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-@Tag(name = "Autenticación", description = "Endpoints para el inicio de sesión y gestión de tokens")
+@Tag(name = SWAGGER_TAG_AUTH, description = SWAGGER_TAG_AUTH_DESCRIPTION)
 public class AuthController {
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
@@ -30,17 +31,17 @@ public class AuthController {
     private BCryptPasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
-    @Operation(summary = "Iniciar sesión", description = "Autentica a un usuario y devuelve un token JWT si las credenciales son válidas.")
+    @Operation(summary = SWAGGER_LOGIN_SUMMARY, description = SWAGGER_LOGIN_DESCRIPTION)
     public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequest) {
         UserEntity user = userRepository.findByEmail(loginRequest.getEmail());
         if (user == null) {
-            return ResponseEntity.status(401).body("Credenciales inválidas");
+            return ResponseEntity.status(401).body(AUTH_INVALID_CREDENTIALS_MESSAGE);
         }
         boolean passwordMatches = passwordEncoder.matches(loginRequest.getPassword(), user.getPassword());
         if (!passwordMatches) {
-            return ResponseEntity.status(401).body("Credenciales inválidas");
+            return ResponseEntity.status(401).body(AUTH_INVALID_CREDENTIALS_MESSAGE);
         }
         String token = jwtUtil.generateToken(user.getEmail());
-        return ResponseEntity.ok().body(java.util.Map.of("access_token", token));
+        return ResponseEntity.ok().body(java.util.Map.of(AUTH_ACCESS_TOKEN_KEY, token));
     }
 } 
