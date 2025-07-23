@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import static com.tcc.taskmanager.infraestructure.constants.InfrastructureConstants.*;
@@ -21,7 +21,7 @@ import static com.tcc.taskmanager.infraestructure.constants.InfrastructureConsta
 @RequiredArgsConstructor
 @Tag(name = SWAGGER_TAG_AUTH, description = SWAGGER_TAG_AUTH_DESCRIPTION)
 public class AuthController {
-    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+    // private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @Autowired
     private IUserRepository userRepository;
